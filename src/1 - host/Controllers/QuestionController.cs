@@ -6,26 +6,25 @@ namespace MinhaPrimeiraAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class QuestionController : ControllerBase
+    public class QuestionController : Controller
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        private readonly ILogger<QuestionController> _logger;
         private readonly MinhaAppContext _db;
+        private readonly ILogger<QuestionController> _logger;
 
         public QuestionController(ILogger<QuestionController> logger, MinhaAppContext db)
         {
-            _logger = logger;
             _db = db;
+            _logger = logger;
         }
 
-        [HttpGet]
-        public IEnumerable<Player> Get()
+        [HttpGet("view")]
+        public IActionResult GetView()
         {
-            return _db.Players.ToList();
+            ViewData["Title"] = "Testando a view";
+            ViewData["Message"] = "teesssteeeeeeee.";
+
+            return View("./Index");
         }
     }
+
 }

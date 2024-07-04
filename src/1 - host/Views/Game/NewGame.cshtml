@@ -1,0 +1,97 @@
+﻿@model MinhaPrimeiraAPI.DataTransferObject.NewGameDTO
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Create New Game</title>
+    <style>
+        .box {
+            /*border: solid 1px; */
+            margin-top: 10px;
+        }
+
+        form {
+            width: 50%;
+            height: 50%;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let questionIndex = 0;
+
+            document.getElementById('addQuestion').addEventListener('click', function () {
+                questionIndex++;
+                const questionContainer = document.createElement('div');
+                questionContainer.innerHTML = `
+                            <div class="box">
+                                <br>
+                                <label>Description:</label><br/>
+                                <input type="text" name="questions[${questionIndex}].description" required />
+                                <button type="button" onclick="addOption(${questionIndex})">Add New Option</button>
+                                <div id="question-${questionIndex}-options">
+                                    <div>
+                                        <label>Option 1:</label>
+                                        <input type="text" name="questions[${questionIndex}].options[0].description" required />
+                                        <label>Is Correct:</label>
+                                                <input type="checkbox" name="questions[${questionIndex}].options[0].isCorrect" value="on" />
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                document.getElementById('questions').appendChild(questionContainer);
+            });
+
+            window.addOption = function (questionIndex) {
+                const optionsContainer = document.getElementById(`question-${questionIndex}-options`);
+                const optionCount = optionsContainer.children.length;
+                const optionContainer = document.createElement('div');
+                optionContainer.innerHTML = `
+                            <div>
+                                <label>Option ${optionCount + 1}:</label>
+                                <input type="text" name="questions[${questionIndex}].options[${optionCount}].description" required />
+                                <label>Is Correct:</label>
+                                        <input type="checkbox" name="questions[${questionIndex}].options[${optionCount}].isCorrect" value="on" />
+                            </div>
+                        `;
+                optionsContainer.appendChild(optionContainer);
+            }
+        });
+    </script>
+</head>
+<body>
+    <h2>Create New Game</h2>
+
+    <form asp-action="CreateNewGame" asp-controller="Game" method="post">
+        <div>
+            <label>Theme:</label>
+            <input type="text" name="theme" required />
+        </div>
+        <div id="questions" class="box">
+            <h3>Questions</h3>
+            <div>
+                <label>Description:</label><br/>
+                <input type="text" name="questions[0].description" required />
+                <button type="button" onclick="addOption(0)">Add New Option</button>
+                <div id="question-0-options">
+                    <div>
+                        <label>Option 1:</label>
+                        <input type="text" name="questions[0].options[0].description" required />
+                        <label>Is Correct:</label>
+                        <input type="checkbox" name="questions[0].options[0].isCorrect" value="on"/>
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+        <div>
+            <br/>
+            <button type="button" id="addQuestion">Add New Question</button>
+        </div>
+        <div>
+            <br />
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+</body>
+</html>
