@@ -1,40 +1,96 @@
-# DIO - Trilha .NET - Fundamentos
-www.dio.me
+# Show do Milhão - Sistema de Quiz em C#
 
-## Desafio de projeto
-Para este desafio, você precisará usar seus conhecimentos adquiridos no módulo de fundamentos, da trilha .NET da DIO.
+Este é um projeto de um sistema de quiz inspirado no programa de TV *Show do Milhão*, desenvolvido com **C#**, **ASP.NET MVC**, **Entity Framework** e **SQL Server**. O jogo permite que os usuários participem de um quiz de perguntas e respostas, seguindo o formato do programa.
 
-## Contexto
-Você foi contratado para construir um sistema para um estacionamento, que será usado para gerenciar os veículos estacionados e realizar suas operações, como por exemplo adicionar um veículo, remover um veículo (e exibir o valor cobrado durante o período) e listar os veículos.
+## Funcionalidades
 
-## Proposta
-Você precisará construir uma classe chamada "Estacionamento", conforme o diagrama abaixo:
-![Diagrama de classe estacionamento](diagrama_classe_estacionamento.png)
+- **Sistema de Login**: Permite que os jogadores se registrem e façam login para participar do jogo.
+- **Sistema de Pontuação**: O jogador acumula pontos conforme avança nas rodadas e acerta as respostas.
+- **Ajuda**: Implementação de ajudas como "Pular Pergunta", "50-50", "Chave de Resposta" etc.
+- **Base de Dados**: Utiliza o **Entity Framework** para a persistência das informações (usuários, perguntas, respostas).
 
-A classe contém três variáveis, sendo:
+## Tecnologias Utilizadas
 
-**precoInicial**: Tipo decimal. É o preço cobrado para deixar seu veículo estacionado.
+- **C#**: Linguagem de programação principal.
+- **ASP.NET MVC**: Framework para a construção do aplicativo web.
+- **Entity Framework**: ORM para interagir com o banco de dados.
+- **SQL Server**: Banco de dados relacional para armazenar dados dos usuários, perguntas e respostas.
+- **HTML, CSS, JavaScript**: Para a construção da interface de usuário (frontend).
 
-**precoPorHora**: Tipo decimal. É o preço por hora que o veículo permanecer estacionado.
+## Como Rodar o Projeto
 
-**veiculos**: É uma lista de string, representando uma coleção de veículos estacionados. Contém apenas a placa do veículo.
+### Pré-requisitos
 
-A classe contém três métodos, sendo:
+Antes de rodar o projeto, certifique-se de que você tem os seguintes pré-requisitos instalados:
 
-**AdicionarVeiculo**: Método responsável por receber uma placa digitada pelo usuário e guardar na variável **veiculos**.
+- **.NET SDK**: Versão [x.x.x] do .NET SDK.
+- **SQL Server**: Você pode usar o SQL Server local ou uma instância do SQL Server na nuvem.
+- **Visual Studio**: A IDE recomendada para trabalhar com projetos ASP.NET MVC.
 
-**RemoverVeiculo**: Método responsável por verificar se um determinado veículo está estacionado, e caso positivo, irá pedir a quantidade de horas que ele permaneceu no estacionamento. Após isso, realiza o seguinte cálculo: **precoInicial** * **precoPorHora**, exibindo para o usuário.
+### Passos para rodar o projeto
 
-**ListarVeiculos**: Lista todos os veículos presentes atualmente no estacionamento. Caso não haja nenhum, exibir a mensagem "Não há veículos estacionados".
+1. **Clone o repositório**:
 
-Por último, deverá ser feito um menu interativo com as seguintes ações implementadas:
-1. Cadastrar veículo
-2. Remover veículo
-3. Listar veículos
-4. Encerrar
+    ```bash
+    git clone https://github.com/Jmaieli/show-do-milhao.git
+    ```
 
+2. **Abra o projeto no Visual Studio**.
 
-## Solução
-O código está pela metade, e você deverá dar continuidade obedecendo as regras descritas acima, para que no final, tenhamos um programa funcional. Procure pela palavra comentada "TODO" no código, em seguida, implemente conforme as regras acima.
+3. **Configuração do Banco de Dados**:
 
-## Teste
+    - Crie um banco de dados no SQL Server e configure a string de conexão no arquivo `appsettings.json`:
+
+    ```json
+    {
+      "ConnectionStrings": {
+        "DefaultConnection": "Server=localhost;Database=ShowDoMilhaoDb;Trusted_Connection=True;"
+      }
+    }
+    ```
+
+    - Execute as migrations do Entity Framework para criar as tabelas no banco de dados:
+
+    ```bash
+    dotnet ef database update
+    ```
+
+4. **Rodando o servidor**:
+
+    No Visual Studio, basta clicar em "Iniciar" ou usar o comando:
+
+    ```bash
+    dotnet run
+    ```
+
+5. Abra seu navegador e acesse:
+
+    ```
+    http://localhost:5000
+    ```
+
+    Agora você pode jogar o **Show do Milhão**!
+
+## Estrutura do Projeto
+
+- **Controllers**: Contém a lógica de controle para cada página do jogo (LoginController, QuizController, etc.).
+- **Models**: Contém as classes que representam as entidades do banco de dados (User, Question, Answer, etc.).
+- **Views**: Contém as páginas HTML do frontend (Login, Quiz, Resultados, etc.).
+- **Data**: Configuração do Entity Framework e migrações.
+
+## Contribuindo
+
+1. Faça um fork deste repositório.
+2. Crie uma branch para a sua funcionalidade (`git checkout -b feature/nova-funcionalidade`).
+3. Commit suas mudanças (`git commit -am 'Adiciona nova funcionalidade'`).
+4. Envie para a branch (`git push origin feature/nova-funcionalidade`).
+5. Crie um Pull Request.
+
+## Licença
+
+Distribuído sob a licença MIT. Veja o arquivo `LICENSE` para mais informações.
+
+## Agradecimentos
+
+- Agradecimentos à [Comunidade .NET](https://dotnet.microsoft.com) e aos tutoriais de ASP.NET MVC e Entity Framework para as referências e ajuda durante o desenvolvimento deste projeto.
+
